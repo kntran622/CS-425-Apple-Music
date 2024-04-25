@@ -1,0 +1,61 @@
+{% extends "myapp/layout.html" %} {% block body %}
+<style>
+  .box-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .box-display {
+    font-size: 10px !important;
+    border: solid gray 2px;
+    border-radius: 15px;
+    padding: 15px;
+    min-width: 200px;
+    min-height: 200px;
+    margin: 10px;
+  }
+  h3 {
+    font-size: 15px;
+  }
+</style>
+<h2>Artists:</h2>
+<form method="GET" action="{% url 'artistHome' %}">
+    <input type="text" name="search" placeholder="Search...">
+    <button type="submit">Search</button>
+</form>
+<form method="get" action="{% url 'artistHome' %}">
+    <label for="sort">Sort By:</label>
+    <select name="sort" id="sort">
+        <option value="highest_total_streams" {% if sort_option == 'highest_total_streams' %} selected {% endif %}>Highest Total Streams</option>
+        <option value="lowest_total_streams" {% if sort_option == 'lowest_total_streams' %} selected {% endif %}>Lowest Total Streams</option>
+        <option value="oldest" {% if sort_option == 'oldest' %} selected {% endif %}>Oldest Artist</option>
+        <option value="youngest" {% if sort_option == 'youngest' %} selected {% endif %}>Youngest Artist</option>
+        <option value="newest" {% if sort_option == 'newest' %} selected {% endif %}>Newest Artist</option>
+    </select>
+    <button type="submit">Sort</button>
+</form>
+<div class="box-container">
+  {% for artist in artists %}
+  <div class="box-display">
+    <h3>
+      Artist:
+      <a href="{% url 'artistPage' artist.artistID %}"
+        >{{ artist.artistName }}</a
+      >
+    </h3>
+    <h3>Genre: {{artist.genre}}</h3>
+    <h3>BirthDate: {{artist.birthDate}}</h3>
+    <h3>Total Streams: {{artist.totalStreams}}</h3>
+    <h3>Average Streams: {{artist.averageStreams}}</h3>
+    <p>
+      <a href="{% url 'updateArtist' artist.artistID %}">UPDATE ARTIST</a>
+    </p>
+
+    <p>
+      <a href="{% url 'deleteArtist' artist.artistID %}">DELETE ARTIST</a>
+    </p>
+  </div>
+  {% endfor %}
+</div>{% endblock %}
+</div>

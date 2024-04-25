@@ -1,0 +1,18 @@
+.box-container {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+}
+
+.box-display {
+  font-size: 10px !important;
+  border: solid gray 2px;
+  border-radius: 15px;
+  padding: 15px;
+  min-width: 200px;
+  min-height: 200px;
+  margin: 10px;
+}
+h3 {
+  font-size: 50px;
+}

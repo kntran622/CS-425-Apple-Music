@@ -1,0 +1,44 @@
+{% extends "myapp/layout.html" %} {% block body %}
+<style>
+  .box-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .box-display {
+    font-size: 10px !important;
+    border: solid gray 2px;
+    border-radius: 15px;
+    padding: 15px;
+    min-width: 150px;
+    min-height: 150px;
+    margin: 10px;
+  }
+</style>
+<h1>{{album.albumName}}</h1>
+<h2>Average Streams Per Song: {{album.averageStreams}}</h2>
+<form method="get" action="/albumPage/{{ album.albumID }}">
+  <label for="sort">Sort By:</label>
+  <select name="sort" id="sort">
+      <option value="highest_streams" {% if sort_option == 'highest_streams' %} selected {% endif %}>Highest Streams</option>
+      <option value="lowest_streams" {% if sort_option == 'lowest_streams' %} selected {% endif %}>Lowest Streams</option>
+      <option value="oldest" {% if sort_option == 'oldest' %} selected {% endif %}>Oldest Song</option>
+      <option value="newest" {% if sort_option == 'newest' %} selected {% endif %}>Newest Song</option>
+  </select>
+  <button type="submit">Sort</button>
+</form>
+<h2>Songs:</h2>
+
+<div class="box-container">
+  {% for song in songs %}
+  <div class="box-display">
+    <h2>Song: {{ song.songName }}</h2>
+    <h2>Artist: {{song.artistName}}</h2>
+    <h2>Genre: {{song.genre}}</h2>
+    <h2>Released: {{song.releaseDate}}</h2>
+    <h2>Streams: {{song.streams}}</h2>
+    <h2>Length: {{song.length}}</h2>
+  </div>
+  {% endfor %}{% endblock %}
+</div>

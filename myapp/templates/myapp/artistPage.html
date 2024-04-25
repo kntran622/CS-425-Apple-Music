@@ -1,0 +1,70 @@
+{% extends "myapp/layout.html" %} {% block body %}
+<style>
+  .box-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .box-display {
+    font-size: 10px !important;
+    border: solid gray 2px;
+    border-radius: 15px;
+    padding: 15px;
+    min-width: 200px;
+    min-height: 200px;
+    margin: 10px;
+  }
+  h3 {
+    font-size: 15px;
+  }
+</style>
+<div>
+  <title>HELLO</title>
+  <h1>{{artist.artistName}}</h1>
+  <h2>Total streams: {{artist.totalStreams}}</h2>
+  <h2>Average stream per song: {{artist.averageStreams}}</h2>
+  <div class="box-container"></div>
+  <h2>Albums:</h2>
+  <div class="box-container">
+    {% for album in albums %}
+    <div class="box-display">
+      <h3>Album: {{ album.albumName }}</h3>
+      <h3>Artist: {{album.artistID.artistName}}</h3>
+      <h3>Number of Songs: {{ album.numberOfSongs }}</h3>
+      <h3>Description: {{album.description}}</h3>
+      <h3>Genre: {{album.genre}}</h3>
+      <h3>Released: {{album.releaseDate}}</h3>
+      <p>
+        <a href="{% url 'updateAlbum' album.albumID %}">UPDATE ALBUM</a>
+      </p>
+
+      <p>
+        <a href="{% url 'deleteAlbum' album.albumID %}">DELETE ALBUM</a>
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+  <h2>Songs:</h2>
+  <div class="box-container">
+    {% for song in songs %}
+    <div class="box-display">
+      <h3>Song: {{ song.songName }}</h3>
+      <h3>Artist: {{song.artistID.artistName}}</h3>
+      <h3>Album: {{song.albumID.albumName}}</h3>
+      <h3>Genre: {{song.genre}}</h3>
+      <h3>Released: {{song.releaseDate}}</h3>
+      <h3>Streams: {{song.streams}}</h3>
+
+      <p>
+        <a href="{% url 'updateSong' song.songID %}">UPDATE SONG</a>
+      </p>
+
+      <p>
+        <a href="{% url 'deleteSong' song.songID %}">DELETE SONG</a>
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "myapp/layout.html" %} {% block body %}
+<style>
+  .box-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .box-display {
+    font-size: 10px !important;
+    border: solid gray 2px;
+    border-radius: 15px;
+    padding: 15px;
+    min-width: 200px;
+    min-height: 200px;
+    margin: 10px;
+  }
+  h3 {
+    font-size: 15px;
+  }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liked Songs</title>
+  </head>
+  <body>
+    <h1>Liked Songs by {{ listener.listenerName }}</h1>
+    <div class="box-container">
+      {% for song in liked_songs %}
+      <div class="box-display">
+        <h3>Song: {{ song.song.songName }}</h3>
+        <h3>Artist: {{song.song.artistName}}</h3>
+        <h3>Album: {{song.song.albumName}}</h3>
+        <h3>Genre: {{song.song.genre}}</h3>
+        <h3>Released: {{song.song.releaseDate}}</h3>
+        <h3>Streams: {{song.song.streams}}</h3>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
+
+{%endblock%}

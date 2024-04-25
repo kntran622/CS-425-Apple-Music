@@ -1,0 +1,23 @@
+{% extends "myapp/layout.html" %} {% block body %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listener Home</title>
+  </head>
+  <body>
+    <h1>All Listeners</h1>
+    <ul>
+      {% for listener in listeners %}
+      <p>
+        <a href="{% url 'listenerLikedSongs' listener.listenerID %}"
+          >{{ listener.listenerName }}</a
+        >
+      </p>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
+
+{%endblock%}

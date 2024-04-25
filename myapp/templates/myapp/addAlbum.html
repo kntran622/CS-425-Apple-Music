@@ -1,0 +1,12 @@
+{% extends "myapp/layout.html" %} {% block body %}
+<!-- Survey Form -->
+<center>
+  <h1>Add an album to the database</h1>
+
+  <form action="" method="POST">
+    {% csrf_token %} {{form.as_p}}
+
+    <input type="submit" value="Submit" class="btn btn-secondary" />
+  </form>
+</center>
+{% endblock %}

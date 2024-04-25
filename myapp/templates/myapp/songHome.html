@@ -1,0 +1,76 @@
+{% extends "myapp/layout.html" %}
+{% block body %}
+<style>
+  .box-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .box-display {
+    font-size: 10px !important;
+    border: solid gray 2px;
+    border-radius: 15px;
+    padding: 15px;
+    min-width: 200px;
+    min-height: 200px;
+    margin: 10px;
+  }
+  h3 {
+    font-size: 15px;
+  }
+</style>
+
+<h2>Songs:</h2>
+<form method="GET" action="{% url 'songHome' %}">
+    <input type="text" name="search" placeholder="Search..." value="{{ search_query }}">
+    {% for genre in selected_genres %}
+        <input type="hidden" name="genre" value="{{ genre }}">
+    {% endfor %}
+    <button type="submit">Search</button>
+</form>
+<form method="GET" action="{% url 'songHome' %}">
+    <fieldset>
+        <legend>Filter by Genre:</legend>
+        {% for genre in genres %}
+            <input type="checkbox" id="{{ genre }}" name="genre" value="{{ genre }}" {% if genre in selected_genres %} checked {% endif %}>
+            <label for="{{ genre }}">{{ genre }}</label><br>
+        {% endfor %}
+        {% for genre in selected_genres %}
+            <input type="hidden" name="selected_genres" value="{{ genre }}">
+        {% endfor %}
+    </fieldset>
+    <button type="submit">Apply Filter</button>
+</form>
+<form method="get" action="{% url 'songHome' %}">
+    <input type="hidden" name="search" value="{{ search_query }}">
+    {% for genre in selected_genres %}
+        <input type="hidden" name="genre" value="{{ genre }}">
+    {% endfor %}
+    <label for="sort">Sort By:</label>
+    <select name="sort" id="sort">
+        <option value="highest_streams" {% if sort_option == 'highest_streams' %} selected {% endif %}>Highest Streams</option>
+        <option value="lowest_streams" {% if sort_option == 'lowest_streams' %} selected {% endif %}>Lowest Streams</option>
+        <option value="oldest" {% if sort_option == 'oldest' %} selected {% endif %}>Oldest Song</option>
+        <option value="newest" {% if sort_option == 'newest' %} selected {% endif %}>Newest Song</option>
+    </select>
+    <button type="submit">Sort</button>
+</form>
+
+<div class="box-container">
+  {% for song in songs %}
+  <div class="box-display">
+    <h3>Song: {{ song.songName }}</h3>
+    <h3>Artist: {{song.artistName}}</h3>
+    <h3>Album: {{song.albumName}}</h3>
+    <h3>Genre: {{song.genre}}</h3>
+    <h3>Released: {{song.releaseDate}}</h3>
+    <h3>Streams: {{song.streams}}</h3>
+    <p>
+      <a href="{% url 'recommendedSong' song.songID %}">Recommend Song</a>
+    </p>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

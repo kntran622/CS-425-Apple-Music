@@ -1,0 +1,16 @@
+{% extends "myapp/layout.html" %} {% load static %} {% block body %}
+<!-- Survey Form -->
+<center>
+  <div id="survey-form">
+    <h1>Update this song:</h1>
+
+    <h2>{{song.songName}}</h2>
+
+    <form action="" method="POST">
+      {% csrf_token %} {{form.as_p}}
+
+      <input type="submit" value="Submit" class="button" />
+    </form>
+  </div>
+</center>
+{% endblock %}

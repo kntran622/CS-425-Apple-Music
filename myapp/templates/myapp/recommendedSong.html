@@ -1,0 +1,23 @@
+{% extends "myapp/layout.html" %} {% block body %}
+<!-- Survey Form -->
+<center>
+  <h1>Recommended Song</h1>
+  {% if recommended_song %}
+  <p><strong>Song Name:</strong> {{ recommended_song.songName }}</p>
+  <p><strong>Artist:</strong> {{ recommended_song.artistName }}</p>
+  <p><strong>Album:</strong> {{ recommended_song.albumName }}</p>
+  <p><strong>Release Date:</strong> {{ recommended_song.releaseDate }}</p>
+  <p><strong>Streams:</strong> {{ recommended_song.streams }}</p>
+
+  <h2>Number of common listeners: {{common_listeners_count}}</h2>
+  <h1>All Common Listeners:</h1>
+  <ul>
+    {% for listener in common_listeners %}
+    <p>{{ listener }}</p>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No recommended song found.</p>
+  {% endif %}
+</center>
+{% endblock %}

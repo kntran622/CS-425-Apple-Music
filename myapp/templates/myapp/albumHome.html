@@ -1,0 +1,52 @@
+{% extends "myapp/layout.html" %} 
+{% block body %}
+<style>
+  .box-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .box-display {
+    font-size: 10px !important;
+    border: solid gray 2px;
+    border-radius: 15px;
+    padding: 15px;
+    min-width: 200px;
+    min-height: 200px;
+    margin: 10px;
+  }
+  h3 {
+    font-size: 15px;
+  }
+</style>
+<h2>Albums:</h2>
+<form method="GET" action="{% url 'albumHome' %}">
+    <input type="text" name="search" placeholder="Search...">
+    <button type="submit">Search</button>
+</form>
+<form method="get" action="{% url 'albumHome' %}">
+  <label for="sort">Sort By:</label>
+  <select name="sort" id="sort">
+      <option value="highest_total_streams" {% if sort_option == 'highest_total_streams' %} selected {% endif %}>Highest Total Streams</option>
+      <option value="lowest_total_streams" {% if sort_option == 'lowest_total_streams' %} selected {% endif %}>Lowest Total Streams</option>
+      <option value="oldest" {% if sort_option == 'oldest' %} selected {% endif %}>Oldest Album</option>
+      <option value="newest" {% if sort_option == 'newest' %} selected {% endif %}>Newest Album</option>
+      <option value="highest_average_streams_per_song" {% if sort_option == 'highest_average_streams_per_song' %} selected {% endif %}>Highest Average Streams per Song</option>
+      <option value="lowest_average_streams_per_song" {% if sort_option == 'lowest_average_streams_per_song' %} selected {% endif %}>Lowest Average Streams per Song</option>
+  </select>
+  <button type="submit">Sort</button>
+</form>
+
+<div class="box-container">
+  {% for album in albums %}
+  <div class="box-display">
+    <h3>Album: {{ album.albumName }}</h3>
+    <h3>Artist: {{ album.artistName }}</h3>
+    <h3>Release Date: {{ album.releaseDate }}</h3>
+    <h3>Total Streams: {{ album.totalStreams }}</h3>
+    <h3>Average Streams: {{ album.averageStreams }}</h3>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
